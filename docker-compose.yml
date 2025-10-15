@@ -1,0 +1,41 @@
+version: '3.8'
+
+services:
+  asterisk:
+    build: ./server/asterisk
+    container_name: ${PROJECT_NAME}-asterisk
+    ports:
+      - "${ASTERISK_SIP_PORT}:5060/udp"
+      - "${ASTERISK_RTP_PORTS}:${ASTERISK_RTP_PORTS}/udp"
+    volumes:
+      - ./server/asterisk/configs:/etc/asterisk
+      - asterisk_data:/var/lib/asterisk
+    env_file:
+      - ./server/asterisk/.env
+    networks:
+      - pbx-network
+    restart: unless-stopped
+
+  postgres:
+    image: postgres:15
+    container_name: ${PROJECT_NAME}-postgres
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB}
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./database/init.sql:/docker-entrypoint-initdb.d/init.sql
+    networks:
+      - pbx-network
+    restart: unless-stopped
+
+  # Добавьте другие сервисы...
+
+volumes:
+  asterisk_data:
+  postgres_data:
+
+networks:
+  pbx-network:
+    driver: bridge
