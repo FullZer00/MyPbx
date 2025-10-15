@@ -1,0 +1,13 @@
+.env
+
+*.log
+
+data/
+volumes/
+
+backup/
+*.backup
+*.sql.bak
+
+tmp/
+temp/
