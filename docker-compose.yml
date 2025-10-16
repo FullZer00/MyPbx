@@ -16,9 +16,11 @@ services:
       - pbx-network
     restart: unless-stopped
 
-  postgres:
+  db:
     image: postgres:15
     container_name: ${PROJECT_NAME}-postgres
+    ports: 
+      - "${POSTGRES_PORT}:5432"
     environment:
       POSTGRES_DB: ${POSTGRES_DB}
       POSTGRES_USER: ${POSTGRES_USER}
@@ -26,6 +28,8 @@ services:
     volumes:
       - postgres_data:/var/lib/postgresql/data
       - ./database/init.sql:/docker-entrypoint-initdb.d/init.sql
+    env_file:
+      - ./database/.env
     networks:
       - pbx-network
     restart: unless-stopped
