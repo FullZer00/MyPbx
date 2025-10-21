@@ -1,9 +1,9 @@
 # common_lib/core/base_service.py
 from abc import ABC, abstractmethod
-from typing import Any, Dict, List
+from typing import Any, Dict
 
-from utils.custom_logger import CustomLogger
-from exceptions import ServiceException
+from src.common_lib.utils.custom_logger import CustomLogger
+from src.common_lib.exceptions import ServiceException
 
 class BaseService(ABC):
     def __init__(self, service_name: str):
@@ -21,7 +21,7 @@ class BaseService(ABC):
 
 # common_lib/core/base_repository.py
 from abc import ABC, abstractmethod
-from typing import List, Optional, TypeVar, Generic
+from typing import Optional, TypeVar, Generic
 
 T = TypeVar('T')
 
