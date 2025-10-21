@@ -1,15 +1,17 @@
 import os
+from dataclasses import dataclass
 
 from common_lib.core.config import GlobalSettings
 
-
 class DatabaseConfig(GlobalSettings):
-    project_name: str = os.getenv('PROJECT_NAME')
-    host: str = os.getenv('POSTGRES_ADDRESS')
-    port: int = os.getenv('POSTGRES_PORT')
-    name: str = os.getenv('POSTGRES_DB')
-    user: str = os.getenv('POSTGRES_USER')
-    password: str = os.getenv('POSTGRES_PASSWORD')
-    url: str = os.getenv('SQLALCHEMY_DATABASE_URL')
+    DB_SCHEMAS: str = 'public'
 
-config = DatabaseConfig()
+@dataclass
+class FlywayConfig:
+    migrations_location: str = os.getenv('MIGRATIONS_LOCATION', '/app/migrations')
+    baseline_version: str = os.getenv('BASELINE_VERSION', '1')
+    clean_on_validation_error: bool = os.getenv('CLEAN_ON_VALIDATION_ERROR', 'false').lower() == 'true'
+
+class Config:
+    db = DatabaseConfig()
+    flyway = FlywayConfig()

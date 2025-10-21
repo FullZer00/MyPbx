@@ -1,4 +1,4 @@
-from src.common_lib.exceptions.global_exception import GlobalException
+from ..exceptions.global_exception import GlobalException
 
 
 class ServiceException(GlobalException):

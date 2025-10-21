@@ -7,6 +7,8 @@ setup(
     packages=find_packages(where="src"),
     install_requires=[
         "pydantic>=2.0.0",
+        "dotenv",
+        "pydantic-settings>=2.11.0",
         "python-json-logger>=2.0.0",
     ],
 )

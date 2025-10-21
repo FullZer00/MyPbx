@@ -11,7 +11,7 @@ load_env()
 
 class GlobalSettings(BaseSettings):
     PROJECT_NAME: str = os.getenv("PROJECT_NAME")
-    SECRET_KEY: str = os.getenv("SECRET_KEY")
+    SECRET_KEY: str = os.getenv("SECRET_KEY", "")
 
     DB_URL: str = os.getenv("DB_URL")
     DB_NAME: str = os.getenv("DB_NAME")
@@ -20,4 +20,4 @@ class GlobalSettings(BaseSettings):
     DB_HOST: str = os.getenv("DB_HOST")
     DB_PORT: str = os.getenv("DB_PORT")
 
-    ALGORITHM: str = os.getenv("ALGORITHM")
+    ALGORITHM: str = os.getenv("ALGORITHM", "")

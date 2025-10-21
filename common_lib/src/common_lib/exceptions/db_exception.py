@@ -1,4 +1,4 @@
-from src.common_lib.exceptions import GlobalException
+from ..exceptions import GlobalException
 
 
 class DBException(GlobalException):

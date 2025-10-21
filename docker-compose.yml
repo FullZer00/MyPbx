@@ -1,5 +1,3 @@
-version: '3.8'
-
 services:
   asterisk:
     build: ./server/asterisk
@@ -20,21 +18,42 @@ services:
     image: postgres:15
     container_name: ${PROJECT_NAME}-postgres
     ports: 
-      - "${POSTGRES_PORT}:5432"
+      - "${DB_PORT}:5432"
     volumes:
       - postgres_data:/var/lib/postgresql/data
-      - ./database/init.sql:/docker-entrypoint-initdb.d/init.sql
+    environment:
+      - POSTGRES_ADDRESS=${DB_HOST}
+      - POSTGRES_USER=${DB_USER}
+      - POSTGRES_PORT=${DB_PORT}
+      - POSTGRES_PASSWORD=${DB_PASSWORD}
     env_file:
       - ./database/.env
     networks:
       - pbx-network
     restart: unless-stopped
 
+  db_migration:
+    build: 
+      context: .
+      dockerfile: ./server/db_migration_service/Dockerfile
+    container_name: ${PROJECT_NAME}-mirgration_db
+    env_file:
+      - ./.env
+    volumes:
+      - ./server/db_migration_service/src:/app/src
+      - ./server/db_migration_service/run_migrations.py:/app/run_migrations.py
+      - ./server/db_migration_service/mirgations:/app/mirgations
+    depends_on:
+      - db
+    networks:
+      - pbx-network
+
   # Добавьте другие сервисы...
 
 volumes:
   asterisk_data:
   postgres_data:
+  db_migration_data:
 
 networks:
   pbx-network:

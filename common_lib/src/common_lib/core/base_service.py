@@ -1,9 +1,8 @@
-# common_lib/core/base_service.py
 from abc import ABC, abstractmethod
 from typing import Any, Dict
 
-from src.common_lib.utils.custom_logger import CustomLogger
-from src.common_lib.exceptions import ServiceException
+from ..utils.custom_logger import CustomLogger
+from ..exceptions import ServiceException
 
 class BaseService(ABC):
     def __init__(self, service_name: str):
