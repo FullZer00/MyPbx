@@ -7,11 +7,9 @@ from pydantic_settings import BaseSettings
 def load_env():
     load_dotenv("../../../../.env")
 
-    load_dotenv(".env.local", override=True)
-
 load_env()
 
-class Settings(BaseSettings):
+class GlobalSettings(BaseSettings):
     PROJECT_NAME: str = os.getenv("PROJECT_NAME")
     SECRET_KEY: str = os.getenv("SECRET_KEY")
 
@@ -23,5 +21,3 @@ class Settings(BaseSettings):
     DB_PORT: str = os.getenv("DB_PORT")
 
     ALGORITHM: str = os.getenv("ALGORITHM")
-
-settings = Settings()
