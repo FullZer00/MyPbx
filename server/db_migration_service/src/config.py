@@ -2,6 +2,8 @@ import os
 from dataclasses import dataclass
 
 from common_lib.core.config import GlobalSettings
+from common_lib.utils.custom_logger import CustomLogger
+
 
 class DatabaseConfig(GlobalSettings):
     DB_SCHEMAS: str = 'public'
@@ -15,3 +17,5 @@ class FlywayConfig:
 class Config:
     db = DatabaseConfig()
     flyway = FlywayConfig()
+
+custom_logger = CustomLogger(service_name='db_migration_service')
