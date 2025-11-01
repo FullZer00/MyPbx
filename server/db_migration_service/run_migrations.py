@@ -2,12 +2,16 @@ import sys
 import argparse
 from src.config import Config, custom_logger
 from src.flyway_runner import FlywayRunner
+<<<<<<< HEAD
 from common_lib.utils import CustomLogger
+=======
+from src.init import InitRunner
+>>>>>>> init_db
 
 
 def main():
     parser = argparse.ArgumentParser(description='Database Migration Tool')
-    parser.add_argument('command', choices=['migrate', 'info', 'validate', 'clean', 'baseline', 'repair', 'check'],
+    parser.add_argument('command', choices=['migrate', 'info', 'validate', 'clean', 'baseline', 'repair', 'check', 'init'],
                         help='Flyway command to execute')
     parser.add_argument('--config', '-c', help='Path to config file')
 
@@ -16,6 +20,7 @@ def main():
     # Инициализация конфигурации
     config = Config()
     runner = FlywayRunner(config)
+    init_runner = InitRunner(config, init_file="./src/init.sql")
 
     # Проверка подключения к БД перед выполнением команд
     if not runner.check_connection():
@@ -30,7 +35,8 @@ def main():
         'clean': runner.clean,
         'baseline': runner.baseline,
         'repair': runner.repair,
-        'check': runner.check_connection
+        'check': runner.check_connection,
+        'init': init_runner.init
     }
 
     success = commands[args.command]()
