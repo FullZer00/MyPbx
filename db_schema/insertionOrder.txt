@@ -1,0 +1,7 @@
+type_phone_numbers
+users
+info_users
+phone_numbers
+asterisk_config
+flyway_schema_history
+roles

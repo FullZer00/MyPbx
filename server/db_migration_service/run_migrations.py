@@ -1,12 +1,8 @@
 import sys
 import argparse
-from src.config import Config, custom_logger
+from src.config import Config
 from src.flyway_runner import FlywayRunner
-<<<<<<< HEAD
-from common_lib.utils import CustomLogger
-=======
 from src.init import InitRunner
->>>>>>> init_db
 
 
 def main():
@@ -24,7 +20,7 @@ def main():
 
     # Проверка подключения к БД перед выполнением команд
     if not runner.check_connection():
-        custom_logger.structured_logger(message="ERROR: Cannot connect to database", level="ERROR")
+        runner.logger.error(message="ERROR: Cannot connect to database")
         sys.exit(1)
 
     # Выполнение команды
@@ -41,10 +37,10 @@ def main():
 
     success = commands[args.command]()
     if success:
-        custom_logger.structured_logger(message=f'Команда {commands[args.command].__name__} успешно выполнена', level="INFO")
+        runner.logger.info(message=f'Команда {commands[args.command].__name__} успешно выполнена')
         sys.exit(0)
     else:
-        custom_logger.structured_logger(message=f'Команда {commands[args.command].__name__} не выполнена', level="FATAL")
+        runner.logger.fatal(message=f'Команда {commands[args.command].__name__} не выполнена')
         sys.exit(1)
 
 
