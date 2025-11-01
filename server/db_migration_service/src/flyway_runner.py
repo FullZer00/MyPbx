@@ -1,14 +1,16 @@
 import subprocess
-import os
-from typing import List, Optional, Dict
-from src.config import Config
+from typing import List
+
 from common_lib.utils import CustomLogger
+
+from src.config import Config
 
 
 class FlywayRunner:
     def __init__(self, config: Config):
         self.config = config
         self.logger = CustomLogger("db_migration_service")
+        self.logger.enable_debug()
 
     def _build_flyway_command(self, command: str, additional_args: List[str] = None) -> List[str]:
         """Собирает команду Flyway с базовыми параметрами"""
@@ -72,7 +74,7 @@ class FlywayRunner:
 
     def clean(self) -> bool:
         """Очищает базу данных (осторожно!)"""
-        self.logger.warning("Cleaning database - THIS WILL DELETE ALL DATA!")
+        self.logger.warn("Cleaning database - THIS WILL DELETE ALL DATA!")
         cmd = self._build_flyway_command('clean')
         return self._run_flyway_command(cmd)
 

@@ -42,13 +42,14 @@ services:
     volumes:
       - ./server/db_migration_service/src:/app/src
       - ./server/db_migration_service/run_migrations.py:/app/run_migrations.py
-      - ./server/db_migration_service/mirgations:/app/mirgations
+      - ./server/db_migration_service/migrations:/app/migrations
+    stdin_open: true
+    tty: true      
+    command: ["/bin/sh"]
     depends_on:
       - db
     networks:
       - pbx-network
-
-  # Добавьте другие сервисы...
 
 volumes:
   asterisk_data:

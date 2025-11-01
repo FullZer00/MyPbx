@@ -26,5 +26,6 @@ ENV MIGRATIONS_LOCATION=/app/migrations
 
 ENTRYPOINT []
 
-CMD ["sh", "-c", "echo 'Container started. Type commands manually or exit with Ctrl+D'; sh"]
+CMD ["/bin/sh"]
+
 #CMD ["python3", "run_migrations.py", "migrate"]
